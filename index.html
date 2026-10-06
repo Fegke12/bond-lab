@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOND LAB — типы химических связей</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="stage" class="is-title">
+  <div class="bg-grid"></div>
+  <canvas id="dust" width="1600" height="900"></canvas>
+
+  <header id="topbar">
+    <div class="logo"><span class="logo-mark"></span>BOND LAB</div>
+    <div class="top-sec" id="topSec"></div>
+    <div class="top-hint">← → пробел · M оглавление · F полный экран</div>
+  </header>
+
+  <main id="slides">
+
+    <!-- 0 · ТИТУЛ -->
+    <section class="slide slide-title" data-sec="Старт" data-title="BOND LAB">
+      <canvas id="titleCanvas"></canvas>
+      <div class="hero">
+        <div class="kicker rise" style="--i:0">Интерактивная лаборатория · химия</div>
+        <h1 class="rise" style="--i:1">BOND LAB</h1>
+        <div class="hero-sub rise" style="--i:2">Типы химических связей</div>
+        <p class="hero-q rise" style="--i:3">Что заставляет атомы объединяться в&nbsp;молекулы и&nbsp;вещества?</p>
+        <button class="btn btn-main btn-xl rise" style="--i:4" id="startBtn">Начать исследование <span class="arr">→</span></button>
+      </div>
+      <div class="title-cap rise" style="--i:6">Модель: три молекулы H₂O · сплошные линии — ковалентные связи · пунктир — водородные</div>
+    </section>
+
+    <!-- 1 · ПОЧЕМУ АТОМЫ СОЕДИНЯЮТСЯ -->
+    <section class="slide" data-sec="Основы" data-title="Почему атомы соединяются?">
+      <div class="head"><div class="kicker">Эксперимент 01 · два атома водорода</div><h2>Почему атомы соединяются?</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <svg id="whySvg" viewBox="0 0 960 470"></svg>
+          <div class="viz-ctrl">
+            <span class="mono">ближе</span>
+            <input type="range" id="whyRange" min="35" max="320" value="300" aria-label="Расстояние между ядрами">
+            <span class="mono">дальше</span>
+            <button class="btn btn-main" id="whyApproach">Сблизить атомы</button>
+          </div>
+        </div>
+        <div class="side">
+          <p class="lead">Рядом друг с&nbsp;другом атомы могут перейти в&nbsp;состояние с&nbsp;<b>меньшей энергией</b>. Такое состояние устойчиво — это и&nbsp;есть химическая связь.</p>
+          <div class="status" id="whyStatus"></div>
+          <div class="mono label">Словарь — нажмите на понятие</div>
+          <div class="chips" id="whyChips">
+            <button class="chip" data-k="atom">атом</button>
+            <button class="chip" data-k="nuc">ядро</button>
+            <button class="chip" data-k="shell">электронная оболочка</button>
+            <button class="chip" data-k="val">валентные электроны</button>
+            <button class="chip" data-k="bond">химическая связь</button>
+          </div>
+          <div class="def" id="whyDef">Свойства вещества зависят не&nbsp;только от&nbsp;того, какие атомы в&nbsp;нём есть, но&nbsp;и&nbsp;от&nbsp;того, <b>как они связаны</b>.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · ТРИ ТИПА -->
+    <section class="slide" data-sec="Основы" data-title="Три главных типа связи">
+      <div class="head"><div class="kicker">Карта лаборатории</div><h2>Три главных типа связи</h2></div>
+      <div class="types" id="typeCards">
+        <button class="type-card t-ion rise" style="--i:1" data-go="3">
+          <div class="type-art" data-ico="ionic"></div>
+          <div class="type-name">Ионная</div>
+          <p>Электростатическое притяжение между противоположно заряженными ионами.</p>
+          <span class="type-go">Открыть демонстрацию →</span>
+        </button>
+        <button class="type-card t-cov rise" style="--i:2" data-go="5">
+          <div class="type-art" data-ico="cov"></div>
+          <div class="type-name">Ковалентная</div>
+          <p>Образование связи за счёт общих электронных пар между атомами.</p>
+          <span class="type-go">Открыть демонстрацию →</span>
+        </button>
+        <button class="type-card t-met rise" style="--i:3" data-go="8">
+          <div class="type-art" data-ico="metal"></div>
+          <div class="type-name">Металлическая</div>
+          <p>Притяжение между положительными ионами в&nbsp;металлической решётке и&nbsp;делокализованными электронами.</p>
+          <span class="type-go">Открыть демонстрацию →</span>
+        </button>
+      </div>
+      <div class="foot-note rise" style="--i:5">Главный вопрос каждого раздела: <b>что происходит с&nbsp;валентными электронами?</b></div>
+    </section>
+
+    <!-- 3 · ИОННАЯ: ЭКСПЕРИМЕНТ -->
+    <section class="slide" data-sec="Ионная связь" data-title="Ионная связь: передача электрона">
+      <div class="head"><div class="kicker k-ion">Ионная связь · эксперимент NaCl</div><h2>Передача электрона</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <svg id="ionSvg" viewBox="0 0 960 520"></svg>
+          <canvas id="ionLattice" class="overlay-canvas"></canvas>
+          <div class="lat-cap" id="ionLatCap"><b>NaCl</b> — не молекула, а&nbsp;соотношение ионов Na⁺&nbsp;:&nbsp;Cl⁻ = 1&nbsp;:&nbsp;1<span>вокруг каждого Cl⁻ — шесть Na⁺, вокруг каждого Na⁺ — шесть Cl⁻ · линии показывают порядок, а&nbsp;не&nbsp;отдельные «палочки»-связи</span></div>
+          <div class="model-note">Схема оболочек условная: электроны не&nbsp;движутся по&nbsp;круговым орбитам</div>
+        </div>
+        <div class="side">
+          <button class="btn btn-main btn-wide" id="ionRun">▶ Запустить эксперимент</button>
+          <ol class="steps" id="ionSteps">
+            <li>Электронные оболочки</li>
+            <li>Внешний электрон натрия</li>
+            <li>Передача электрона</li>
+            <li>Ионы Na⁺ и Cl⁻</li>
+            <li>Электростатическое притяжение</li>
+            <li>Кристаллическая решётка</li>
+          </ol>
+          <div class="def" id="ionText"></div>
+          <div class="btn-col">
+            <button class="btn" id="ionTransfer">Показать передачу электрона</button>
+            <button class="btn" id="ionIons">Показать ионы</button>
+            <button class="btn" id="ionCrystal">Показать кристаллическую решётку</button>
+            <button class="btn btn-ghost" id="ionReset">Сброс</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · ИОННАЯ: СВОЙСТВА -->
+    <section class="slide" data-sec="Ионная связь" data-title="Свойства ионных соединений">
+      <div class="head"><div class="kicker k-ion">Ионная связь · свойства</div><h2>Когда соль проводит ток?</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <canvas id="saltCanvas"></canvas>
+          <div class="model-note">Модель не&nbsp;показывает процессы на&nbsp;электродах</div>
+        </div>
+        <div class="side">
+          <div class="mono label">Состояние вещества</div>
+          <div class="seg seg-3" id="saltModes">
+            <button data-m="solid" class="on">Кристалл</button>
+            <button data-m="melt">Расплав</button>
+            <button data-m="sol">Раствор</button>
+          </div>
+          <div class="def" id="saltText"></div>
+          <div class="mono label">Ионные соединения</div>
+          <ul class="props">
+            <li>обычно твёрдые кристаллические вещества;</li>
+            <li>многие плавятся при высокой температуре (NaCl — 801&nbsp;°C);</li>
+            <li>расплавы и&nbsp;растворы проводят ток, если в&nbsp;них есть подвижные ионы.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · КОВАЛЕНТНАЯ: ЛАБОРАТОРИЯ -->
+    <section class="slide" data-sec="Ковалентная связь" data-title="Ковалентная связь: общие пары">
+      <div class="head"><div class="kicker k-cov">Ковалентная связь · лаборатория молекул</div><h2>Общие электронные пары</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <div class="tabs" id="covTabs">
+            <button data-m="H2" class="on">H₂</button><button data-m="Cl2">Cl₂</button><button data-m="O2">O₂</button><button data-m="N2">N₂</button><button data-m="HCl">HCl</button><button data-m="H2O">H₂O</button>
+          </div>
+          <svg id="covSvg" viewBox="0 0 960 520"></svg>
+          <div class="model-note">Цвет точек показывает, от&nbsp;какого атома электрон. Сами электроны неразличимы</div>
+        </div>
+        <div class="side">
+          <p class="lead">Электрон <b>не&nbsp;переходит</b> от&nbsp;атома к&nbsp;атому. Каждый атом даёт по&nbsp;электрону в&nbsp;общую пару — и&nbsp;пара принадлежит обоим.</p>
+          <dl class="info" id="covInfo"></dl>
+          <button class="btn btn-main btn-wide" id="covReplay">↻ Образовать связь ещё раз</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · ПОЛЯРНОСТЬ -->
+    <section class="slide" data-sec="Ковалентная связь" data-title="Полярная и неполярная связь">
+      <div class="head"><div class="kicker k-cov">Ковалентная связь · электронная плотность</div><h2>Поровну или со&nbsp;смещением?</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <svg id="polSvg" viewBox="0 0 960 520"></svg>
+        </div>
+        <div class="side">
+          <div class="seg seg-2 seg-big" id="polSeg">
+            <button data-p="0" class="on">Неполярная</button>
+            <button data-p="1">Полярная</button>
+          </div>
+          <div class="chips" id="polMols"></div>
+          <div class="def" id="polText"></div>
+          <ul class="props props-warn">
+            <li><b>δ⁺ и δ⁻ — частичные заряды.</b> Они меньше заряда иона: электрон не&nbsp;переходит полностью.</li>
+            <li><b>Полярная связь ≠ полярная молекула.</b> В&nbsp;CO₂ связи C=O полярные, но&nbsp;молекула линейная и&nbsp;симметричная — в&nbsp;целом неполярная.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · КРАТНОСТЬ -->
+    <section class="slide" data-sec="Ковалентная связь" data-title="Одинарная, двойная, тройная">
+      <div class="head"><div class="kicker k-cov">Ковалентная связь · кратность</div><h2>Одна, две или три общие пары</h2></div>
+      <div class="mult">
+        <div class="mult-cards" id="multCards"></div>
+        <div class="mult-side">
+          <div class="mono label">Энергия связи, кДж/моль</div>
+          <div class="bars" id="multBars"></div>
+          <button class="btn" id="multCompare">Сравнить с&nbsp;Cl–Cl</button>
+          <div class="def" id="multText">В&nbsp;школьной модели чёрточка в&nbsp;формуле — одна общая электронная пара. Нажмите на&nbsp;карточку, чтобы увидеть, как образуются пары.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · МЕТАЛЛИЧЕСКАЯ -->
+    <section class="slide" data-sec="Металлическая связь" data-title="Металлическая связь">
+      <div class="head"><div class="kicker k-met">Металлическая связь · решётка</div><h2>Электроны в&nbsp;движении</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <canvas id="metalCanvas"></canvas>
+          <div class="model-note">Качественная модель: точки не&nbsp;показывают реальные траектории электронов</div>
+        </div>
+        <div class="side">
+          <p class="lead">Атомы металла отдают валентные электроны <b>в&nbsp;общее пользование</b>. Положительные ионы стоят в&nbsp;узлах решётки, а&nbsp;электроны принадлежат всему кристаллу.</p>
+          <div class="mono label">Свойства металлов — нажмите</div>
+          <div class="prop-btns" id="metalProps">
+            <button data-m="base" class="on">Строение</button>
+            <button data-m="heat">Теплопроводность</button>
+            <button data-m="bend">Пластичность и ковкость</button>
+            <button data-m="shine">Металлический блеск</button>
+          </div>
+          <div class="def" id="metalText"></div>
+          <div class="hint-next">Электропроводность — на следующем экране →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · ПРОВОДИМОСТЬ -->
+    <section class="slide" data-sec="Металлическая связь" data-title="Почему металл проводит ток?">
+      <div class="head"><div class="kicker k-met">Металлическая связь · эксперимент</div><h2>Почему металл проводит электрический ток?</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <div class="cwrap"><canvas id="wireCanvas"></canvas>
+          <button class="battery" id="battery" aria-pressed="false"><span class="bat-pole">−</span><span class="bat-body"><b>Источник напряжения</b><i id="batState">выключен · нажмите</i></span><span class="bat-pole">+</span></button></div>
+        </div>
+        <div class="side">
+          <dl class="info info-live">
+            <dt>Ионы решётки</dt><dd>колеблются около узлов и&nbsp;никуда не&nbsp;перемещаются</dd>
+            <dt>Электроны</dt><dd id="wireEl">движутся хаотически, общего направления нет</dd>
+            <dt>Ток</dt><dd id="wireCur">отсутствует</dd>
+          </dl>
+          <div class="def" id="wireText">Нажмите на&nbsp;источник напряжения и&nbsp;следите за&nbsp;электронами.</div>
+          <ul class="props props-warn">
+            <li>В&nbsp;настоящем проводнике направленный дрейф электронов очень медленный — доли миллиметра в&nbsp;секунду. В&nbsp;модели он&nbsp;ускорен.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 · СРАВНЕНИЕ -->
+    <section class="slide" data-sec="Сравнение" data-title="Сравнение типов связи">
+      <div class="head"><div class="kicker">Сводная панель</div><h2>Три связи — три поведения электронов</h2></div>
+      <div class="cmp" id="cmp">
+        <div class="cmp-row cmp-head rise" style="--i:0">
+          <div></div>
+          <button class="c-ion" data-c="1"><span data-ico="ionic"></span>Ионная</button>
+          <button class="c-cov" data-c="2"><span data-ico="cov"></span>Ковалентная</button>
+          <button class="c-met" data-c="3"><span data-ico="metal"></span>Металлическая</button>
+        </div>
+        <div class="cmp-row rise" style="--i:1"><div class="cmp-k">Электроны</div><div>переходят от&nbsp;одного атома к&nbsp;другому</div><div>общие для двух атомов</div><div>общие для всего кристалла</div></div>
+        <div class="cmp-row rise" style="--i:2"><div class="cmp-k">Типичное описание</div><div>притяжение ионов</div><div>общие электронные пары</div><div>делокализованные электроны в&nbsp;решётке</div></div>
+        <div class="cmp-row rise" style="--i:3"><div class="cmp-k">Где встречается</div><div>ионные соединения</div><div>молекулы и&nbsp;атомные структуры</div><div>металлы</div></div>
+        <div class="cmp-row rise" style="--i:4"><div class="cmp-k">Пример</div><div class="big">NaCl</div><div class="big">H₂, HCl, H₂O</div><div class="big">Cu, Fe, Al</div></div>
+        <div class="cmp-row rise" style="--i:5"><div class="cmp-k">Электро­проводность</div><div>зависит от&nbsp;подвижности ионов</div><div>зависит от&nbsp;строения и&nbsp;условий</div><div>обычно высокая у&nbsp;металлов</div></div>
+      </div>
+      <div class="foot-note rise" style="--i:7">Это типичные случаи, а&nbsp;не&nbsp;правила без исключений: графит — ковалентное вещество, но&nbsp;проводит ток; ртуть — металл, но&nbsp;жидкая. Граница между типами тоже нерезкая: ионная связь — предельный случай полярной ковалентной.</div>
+    </section>
+
+    <!-- 11 · ВОДОРОДНАЯ -->
+    <section class="slide" data-sec="Водородная связь" data-title="Водородная связь">
+      <div class="head"><div class="kicker k-hb">Отдельный блок · взаимодействие между молекулами</div><h2>Водородная связь</h2></div>
+      <div class="body cols">
+        <div class="viz panel">
+          <svg id="hbSvg" viewBox="0 0 960 520"></svg>
+        </div>
+        <div class="side">
+          <p class="lead">Притяжение между H&nbsp;(δ⁺) одной молекулы и&nbsp;O&nbsp;(δ⁻) другой. <b>Не&nbsp;входит</b> в&nbsp;три основных типа и&nbsp;намного слабее ковалентной связи.</p>
+          <div class="seg seg-3" id="hbSeg">
+            <button data-h="all" class="on">Все</button>
+            <button data-h="cov">O–H внутри</button>
+            <button data-h="hb">Между молекулами</button>
+          </div>
+          <button class="btn btn-wide" id="hbHeat" aria-pressed="false">Нагреть воду</button>
+          <div class="def" id="hbText"></div>
+          <ul class="props">
+            <li>Вода кипит при 100&nbsp;°C, а&nbsp;более тяжёлый H₂S — при −60&nbsp;°C.</li>
+            <li>Лёд легче воды: молекулы выстроены в&nbsp;ажурный каркас.</li>
+            <li>Бывает и&nbsp;внутри крупных молекул, например белков.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · КОНСТРУКТОР -->
+    <section class="slide" data-sec="Практика" data-title="Конструктор: собери связь">
+      <div class="head"><div class="kicker">Практика · конструктор</div><h2>Собери связь</h2></div>
+      <div class="build">
+        <div class="build-left">
+          <div class="task" id="cTask"></div>
+          <div class="mono label">1 · Атомы — нажмите, чтобы добавить</div>
+          <div class="palette" id="cPalette"></div>
+          <div class="bench" id="cBench"></div>
+          <div class="mono label">2 · Что происходит с электронами</div>
+          <div class="mech" id="cMech">
+            <button data-m="ion"><b>Электрон переходит</b><span>от одного атома к другому</span></button>
+            <button data-m="np"><b>Общая пара поровну</b><span>плотность симметрична</span></button>
+            <button data-m="pol"><b>Общая пара смещена</b><span>к одному из атомов</span></button>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-main" id="cCheck">Проверить модель</button>
+            <button class="btn btn-ghost" id="cReset">Сбросить эксперимент</button>
+          </div>
+        </div>
+        <div class="build-right panel">
+          <div class="score" id="cScore"></div>
+          <svg id="cSvg" viewBox="0 0 820 360"></svg>
+          <div class="feedback" id="cFeedback"></div>
+          <button class="btn btn-main" id="cNext" hidden>Следующее задание →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 · ВИКТОРИНА -->
+    <section class="slide" data-sec="Практика" data-title="Викторина">
+      <div class="head"><div class="kicker">Практика · проверка</div><h2>Викторина</h2></div>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <!-- 14 · ФИНАЛ -->
+    <section class="slide slide-final" data-sec="Итог" data-title="Микромир больше не тайна">
+      <div class="head center"><div class="kicker">Итог исследования</div><h2 class="fin-title">Микромир больше не&nbsp;тайна</h2></div>
+      <div class="fin-grid">
+        <div class="fin-card t-ion rise" style="--i:1"><canvas id="finLattice"></canvas><b>Ионная</b><p>электростатическое притяжение противоположно заряженных ионов</p></div>
+        <div class="fin-card t-cov rise" style="--i:2"><svg id="finMol" viewBox="0 0 300 240"></svg><b>Ковалентная</b><p>общие электронные пары между атомами</p></div>
+        <div class="fin-card t-met rise" style="--i:3"><canvas id="finMetal"></canvas><b>Металлическая</b><p>делокализованные электроны и&nbsp;положительные ионы решётки</p></div>
+        <div class="fin-card t-hb rise" style="--i:4"><div class="fin-ico" data-ico="hbond"></div><b>Водородная</b><p>отдельный тип взаимодействия, важный для свойств многих веществ</p></div>
+      </div>
+      <div class="fin-score rise" style="--i:5" id="finScore"></div>
+      <div class="fin-quote rise" style="--i:6">Химия — это не&nbsp;просто формулы. Это строение мира на&nbsp;уровне атомов.</div>
+      <div class="fin-actions rise" style="--i:7">
+        <button class="btn" id="notesBtn">Об упрощениях моделей</button>
+        <button class="btn btn-ghost" id="againBtn">В начало</button>
+      </div>
+    </section>
+  </main>
+
+  <footer id="bottombar">
+    <button class="ic-btn" id="tocBtn" title="Оглавление (M)"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Оглавление</span></button>
+    <div class="progress" id="progress"></div>
+    <div class="nav">
+      <button class="ic-btn" id="prevBtn" title="Назад (←)"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg><span>Назад</span></button>
+      <div class="counter" id="counter">01 / 15</div>
+      <button class="ic-btn ic-next" id="nextBtn" title="Дальше (→, пробел)"><span>Дальше</span><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button class="ic-btn" id="fsBtn" title="Полный экран (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </footer>
+
+  <div class="overlay" id="toc" hidden>
+    <div class="overlay-box">
+      <div class="overlay-head"><div class="kicker">Оглавление</div><button class="ic-btn" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="toc-list" id="tocList"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="notes" hidden>
+    <div class="overlay-box overlay-narrow">
+      <div class="overlay-head"><div class="kicker">Об упрощениях моделей</div><button class="ic-btn" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <ol class="notes-list">
+        <li><b>Электроны — не&nbsp;шарики на&nbsp;орбитах.</b> Круговые оболочки и&nbsp;точки — условная схема. В&nbsp;реальном атоме электрон описывают электронным облаком: областью, где он может находиться.</li>
+        <li><b>Размеры, цвета и&nbsp;расстояния условны.</b> Ядро в&nbsp;десятки тысяч раз меньше атома — в&nbsp;масштабе его было&nbsp;бы не&nbsp;видно.</li>
+        <li><b>Граница между типами связи нерезкая.</b> Ионная связь — предельный случай полярной ковалентной. Даже в&nbsp;NaCl электрон смещён к&nbsp;хлору не&nbsp;на&nbsp;все 100&nbsp;%.</li>
+        <li><b>Формула O=O объясняет не&nbsp;всё.</b> Например, магнитные свойства кислорода требуют более сложных моделей.</li>
+        <li><b>Электроны в&nbsp;металле показаны качественно.</b> Это не&nbsp;реальные траектории, а&nbsp;дрейф под напряжением в&nbsp;модели сильно ускорен.</li>
+        <li><b>Таблица сравнения — про типичные случаи.</b> У&nbsp;каждого обобщения есть исключения.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
